@@ -1,4 +1,4 @@
-from model import mobilenetv3
+from model import regnet
 from dataset import MyDataset
 import torch
 import torch.nn as nn
@@ -11,9 +11,6 @@ os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 if __name__ == '__main__': 
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--mode", "-m", type=str, default="large"
-    )
     # paser num of workers
     parser.add_argument(
         "--workers", "-w", type=int, default=15
@@ -24,8 +21,7 @@ if __name__ == '__main__':
     traindir = "./data"
     batch_size = 64
     report = 200
-    me = 100
-    mode = opts.mode
+    me = 30
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     whole_dataset = MyDataset(traindir)
     # Define the size for your train and test data
@@ -35,11 +31,10 @@ if __name__ == '__main__':
     train_dataset, test_dataset = random_split(whole_dataset, [train_size, test_size])
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=opts.workers, pin_memory=True, prefetch_factor=2)
     val_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=opts.workers, pin_memory=True, prefetch_factor=2)
-    net = mobilenetv3(n_class=180, input_size = input_size, mode = mode)
-    net.load_state_dict(torch.load("base.pth"))
+    net = regnet(n_class=180, train=True)
     net.to(device)
     criterion = nn.CrossEntropyLoss().to(device)
-    optimizer = torch.optim.Adam(net.parameters(), lr=0.002)
+    optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
     scheduler = CosineAnnealingLR(optimizer, T_max=me)
     best_acc = 0
     start_time = time.time()
@@ -76,11 +71,8 @@ if __name__ == '__main__':
         # save model
         if int(100*correct/total) > best_acc:
             best_acc = int(100*correct/total)
-            torch.save(net.state_dict(), f'mobilenetv3_{mode}_best.pth')
+            torch.save(net.state_dict(), f'regnet_{mode}_best.pth')
         elif epoch % 10 ==9:
-            torch.save(net.state_dict(), f'mobilenetv3_{mode}_epoch{epoch+1}_acc{int(100*correct/total)}.pth')
-        
-    
+            torch.save(net.state_dict(), f'regnet_{mode}_epoch{epoch+1}_acc{int(100*correct/total)}.pth')
+
     print('Finished Training')
-    # torch.save(net.state_dict(), f'mobilenetv3_{mode}2.pth')
-    

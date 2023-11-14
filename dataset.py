@@ -40,7 +40,7 @@ class MyDataset(Dataset):
         self.dataset = datasets.ImageFolder(self.data_dir, transform=self.transform)
         self.pr = T.Compose([
                         T.ToTensor(),
-                        T.Resize(224),
+                        T.Resize(224, antialias=True),
                     ])
         self.norm = T.Normalize(
                             mean = [0.485, 0.456, 0.406],

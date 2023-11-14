@@ -36,7 +36,8 @@ class MyDataset(Dataset):
                     ])
         self.norm = T.Normalize(
                             mean = [0.485, 0.456, 0.406],
-                            std = [0.229, 0.224, 0.225]
+                            std = [0.229, 0.224, 0.225],
+                            inplace=True
                         )
         self.mask = create_circular_mask(224, 224, radius=112)
     def __len__(self):
@@ -48,7 +49,7 @@ class MyDataset(Dataset):
         img = self.pr(img)
         img = T.functional.rotate(img, int(l*360))
         img = torch.where(self.mask, img, torch.ones_like(img))
-        img = self.norm(img)
+        self.norm(img)
         return img, int(l* self.num_cls)
     
 if  __name__ == "__main__":

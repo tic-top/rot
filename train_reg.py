@@ -15,10 +15,13 @@ if __name__ == '__main__':
     parser.add_argument(
         "--workers", "-w", type=int, default=15
     )
+    parser.add_argument(
+        "--data_dir", "-d", type=str, default="./data"
+    )
     opts = parser.parse_args()
     
     input_size = 224
-    traindir = "./data"
+    traindir = opts.data_dir
     batch_size = 64
     report = 100
     me = 30

@@ -28,8 +28,10 @@ class MyDataset(Dataset):
         self.data_dir = data_dir
         self.transform = transform
         dataset = datasets.ImageFolder(self.data_dir, transform=self.transform)
+        print(len(dataset))
         subset_indices = list(range(num))
         self.dataset = torch.utils.data.Subset(dataset, subset_indices)
+        
         self.pr = T.Compose([
                         T.ToTensor(),
                         T.RandomResizedCrop(224, scale=(0.8, 1.0), ratio=(0.8, 1.0),antialias=True),

@@ -71,8 +71,8 @@ if __name__ == '__main__':
         # save model
         if int(100*correct/total) > best_acc:
             best_acc = int(100*correct/total)
-            torch.save(net.state_dict(), f'regnet_{mode}_best.pth')
+            torch.save(net.state_dict(), f'regnet_best.pth')
         elif epoch % 10 ==9:
-            torch.save(net.state_dict(), f'regnet_{mode}_epoch{epoch+1}_acc{int(100*correct/total)}.pth')
+            torch.save(net.state_dict(), f'regnet_epoch{epoch+1}_acc{int(100*correct/total)}.pth')
 
     print('Finished Training')

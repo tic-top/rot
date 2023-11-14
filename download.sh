@@ -3,7 +3,7 @@ apt-get install unzip
 mkdir test
 git clone https://github.com/koishi70/Landscape-Dataset
 cat ./Landscape-Dataset/landscape_dataset.zip.* > combined.zip
-unzip -q combined.zip -d ./google-street-view
+unzip -q combined.zip -d ./data
 rm -r ./Landscape-Dataset
 rm -r ./combined.zip
 # for i in {1..10}

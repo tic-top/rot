@@ -32,7 +32,7 @@ class MyDataset(Dataset):
         self.dataset = torch.utils.data.Subset(dataset, subset_indices)
         self.pr = T.Compose([
                         T.ToTensor(),
-                        T.RandomResizedCrop(224, scale=(0.4, 1.0), ratio=(0.8, 1.0),antialias=True),
+                        T.RandomResizedCrop(224, scale=(0.8, 1.0), ratio=(0.8, 1.0),antialias=True),
                     ])
         self.norm = T.Normalize(
                             mean = [0.485, 0.456, 0.406],
@@ -54,8 +54,8 @@ class MyDataset(Dataset):
 if  __name__ == "__main__":
     train = MyDataset('./data')
     print(len(train))
-    for i in range(10):
+    for i in range(100):
         img, label = train[i]
-        new_img = T.ToPILImage()(img)
-        new_img.show()
+        # new_img = T.ToPILImage()(img)
+        # new_img.show()
         print(label)

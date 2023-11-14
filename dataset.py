@@ -1,6 +1,6 @@
 import torchvision.datasets as datasets
 import torchvision.transforms as T
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, Subset
 import torch
 import random
 import numpy as np
@@ -22,12 +22,14 @@ def create_circular_mask(h, w, center=None, radius=None):
     return mask
 
 class MyDataset(Dataset):
-    def __init__(self, data_dir, num_cls = 180, transform=None):
+    def __init__(self, data_dir, num_cls = 180, transform=None, num = 20000):
         super().__init__()
         self.num_cls = num_cls
         self.data_dir = data_dir
         self.transform = transform
-        self.dataset = datasets.ImageFolder(self.data_dir, transform=self.transform)
+        dataset = datasets.ImageFolder(self.data_dir, transform=self.transform)
+        subset_indices = list(range(num))
+        self.dataset = torch.utils.data.Subset(dataset, subset_indices)
         self.pr = T.Compose([
                         T.ToTensor(),
                         T.RandomResizedCrop(224, scale=(0.4, 1.0), ratio=(0.8, 1.0),antialias=True),

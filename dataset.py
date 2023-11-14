@@ -27,10 +27,10 @@ class MyDataset(Dataset):
         self.num_cls = num_cls
         self.data_dir = data_dir
         self.transform = transform
-        dataset = datasets.ImageFolder(self.data_dir, transform=self.transform)
-        print(len(dataset))
-        subset_indices = list(range(num))
-        self.dataset = torch.utils.data.Subset(dataset, subset_indices)
+        self.dataset = datasets.ImageFolder(self.data_dir, transform=self.transform)
+        # print(len(dataset))
+        # subset_indices = list(range(num))
+        # self.dataset = torch.utils.data.Subset(dataset, subset_indices)
         
         self.pr = T.Compose([
                         T.ToTensor(),

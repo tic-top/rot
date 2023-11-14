@@ -30,7 +30,7 @@ class MyDataset(Dataset):
         self.dataset = datasets.ImageFolder(self.data_dir, transform=self.transform)
         self.pr = T.Compose([
                         T.ToTensor(),
-                        T.RandomResizedCrop(224, scale=(0.4, 1.0), ratio=(0.8, 1.0)),
+                        T.RandomResizedCrop(224, scale=(0.4, 1.0), ratio=(0.8, 1.0),antialias=True),
                     ])
         self.norm = T.Normalize(
                             mean = [0.485, 0.456, 0.406],

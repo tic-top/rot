@@ -244,7 +244,7 @@ class regnet(nn.Module):
     def __init__(self, n_class: int = 180, train: bool = True) -> None:
         super(regnet, self).__init__()
         self.n_class = n_class
-        weights = models.RegNet_Y_32GF_Weights.DEFAULT if train else None
+        weights = models.RegNet_Y_3_2GF_Weights.DEFAULT if train else None
         self.backbone = models.regnet_y_3_2gf(weights=weights)
         fc_channels = self.backbone.fc.in_features
         del self.backbone.fc

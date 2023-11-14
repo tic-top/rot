@@ -21,7 +21,7 @@ if __name__ == '__main__':
     traindir = "./data"
     batch_size = 64
     report = 200
-    me = 30
+    me = 3
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     whole_dataset = MyDataset(traindir)
     # Define the size for your train and test data

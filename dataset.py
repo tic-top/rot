@@ -4,7 +4,7 @@ from torch.utils.data import Dataset, Subset
 import torch
 import random
 import numpy as np
-
+import argparse
 
 def create_circular_mask(h, w, center=None, radius=None):
     if center is None:
@@ -52,7 +52,14 @@ class MyDataset(Dataset):
         return img, int(l* self.num_cls)
     
 if  __name__ == "__main__":
-    train = MyDataset('./data')
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--data_dir", "-d", type=str, default="./city"
+    )
+    opts = parser.parse_args()
+    traindir = opts.data_dir
+    train = MyDataset(traindir)
+
     print(len(train))
     for i in range(100):
         img, label = train[i]

@@ -20,7 +20,7 @@ if __name__ == '__main__':
     input_size = 224
     traindir = "./data"
     batch_size = 64
-    report = 200
+    report = 100
     me = 30
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     whole_dataset = MyDataset(traindir)
@@ -71,8 +71,8 @@ if __name__ == '__main__':
         # save model
         if int(100*correct/total) > best_acc:
             best_acc = int(100*correct/total)
-            torch.save(net.state_dict(), f'regnet_{mode}_best.pth')
+            torch.save(net.state_dict(), f'regnet_best.pth')
         elif epoch % 10 ==9:
-            torch.save(net.state_dict(), f'regnet_{mode}_epoch{epoch+1}_acc{int(100*correct/total)}.pth')
+            torch.save(net.state_dict(), f'regnet_epoch{epoch+1}_acc{int(100*correct/total)}.pth')
 
     print('Finished Training')

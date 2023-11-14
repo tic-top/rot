@@ -22,7 +22,7 @@ def create_circular_mask(h, w, center=None, radius=None):
     return mask
 
 class MyDataset(Dataset):
-    def __init__(self, data_dir, num_cls = 180, transform=None, num = 8000):
+    def __init__(self, data_dir, num_cls = 180, transform=None, num = 20000):
         super().__init__()
         self.num_cls = num_cls
         self.data_dir = data_dir

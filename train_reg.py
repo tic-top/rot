@@ -31,7 +31,7 @@ if __name__ == '__main__':
     train_dataset, test_dataset = random_split(whole_dataset, [train_size, test_size])
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=opts.workers, pin_memory=True, prefetch_factor=2)
     val_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=opts.workers, pin_memory=True, prefetch_factor=2)
-    net = regnet(cls_num=180, train=True)
+    net = regnet(n_class=180, train=True)
     net.to(device)
     criterion = nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
